@@ -26,4 +26,16 @@ describe("Auction Functions", () => {
         const retrievedBids = getBidsForAuction(3);
         expect(retrievedBids).toContainEqual({ auctionId: 3, userId: 2, amount: 350 });
     });
+
+    test("should throw an error if auction is not found", () => {
+        expect(() => placeBid(999, 2, 350)).toThrow('Leilão não encontrado.');
+    });
+
+    test("should throw an error if bid amount is less than or equal to starting price", () => {
+        const auction = { id: 4, name: 'Leilão de maçarico', startingPrice: 500 };
+        createAuction(auction);
+
+        expect(() => placeBid(4, 2, 500)).toThrow('O valor do lance deve ser maior do que o preço inicial.');
+        expect(() => placeBid(4, 2, 400)).toThrow('O valor do lance deve ser maior do que o preço inicial.');
+    });
 });
