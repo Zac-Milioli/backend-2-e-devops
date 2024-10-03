@@ -1,42 +1,29 @@
-const { createAuction, getAuctionById, getBidsForAuction } = require("../../src/auction.js");
-
-jest.mock("../../src/auction.js");
-
-const auctionId = 1;
-const name = "testAuction";
-const startingPrice = 600;
+const { createAuction, getAuctionById, placeBid, getBidsForAuction } = require("../../src/auction.js");
 
 describe("Auction Functions", () => {
-    beforeEach(() => {
-        createAuction.mockClear();
-        getAuctionById.mockClear();
-        getBidsForAuction.mockClear();
-    });
-
     test("should create an auction", () => {
-        const auction = { id: auctionId, name, startingPrice };
+        const auction = { id: 1, name: 'Leilão de pontes', startingPrice: 100 };
         createAuction(auction);
 
-        expect(createAuction).toHaveBeenCalledWith(auction);
-    });
-
-    test("should get an auction by id", () => {
-        const auction = { id: auctionId, name, startingPrice };
-        getAuctionById.mockReturnValue(auction);
-
-        const retrievedAuction = getAuctionById(auctionId);
+        const retrievedAuction = getAuctionById(1);
         expect(retrievedAuction).toEqual(auction);
     });
 
-    test("should get bids for auction using mock", () => {
-        const mockBids = [
-            { auctionId, userId: 1, amount: 700 },
-            { auctionId, userId: 2, amount: 800 }
-        ];
+    test("should get auction by ID", () => {
+        const auction = { id: 2, name: 'Leilão de bicicleta', startingPrice: 200 };
+        createAuction(auction);
 
-        getBidsForAuction.mockReturnValue(mockBids);
+        const retrievedAuction = getAuctionById(2);
+        expect(retrievedAuction).toEqual(auction);
+    });
 
-        const bids = getBidsForAuction(auctionId);
-        expect(bids).toEqual(mockBids);
+    test("should place a bid", () => {
+        const auction = { id: 3, name: 'Leilão de pé de cadeira', startingPrice: 300 };
+        createAuction(auction);
+
+        placeBid(3, 2, 350);
+
+        const retrievedBids = getBidsForAuction(3);
+        expect(retrievedBids).toContainEqual({ auctionId: 3, userId: 2, amount: 350 });
     });
 });
