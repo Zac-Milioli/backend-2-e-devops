@@ -25,3 +25,7 @@ O arquivo **package.json** já está configurado para rodar o jest com a opção
 Caso queira rodar apenas testes de unidade ou apenas teste de integração, você precisará passar isso como parametro para o npm test, por exemplo:
 
 ```npm test -- tests/unit```
+
+## Este repositório está configurado com CI/CD de develop para master
+
+Quando os testes unitários funcionarem, o merge para a master ocorrerá automaticamente
