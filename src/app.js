@@ -24,7 +24,7 @@ const port = 3000;
 
 // Rota GET para "/"
 app.get('/', (req, res) => {
-    res.send('Aplicação EC2 Atualizada');
+    res.send('Aplicação EC2 Atualizada 2');
 });
 
 // Inicia o servidor
